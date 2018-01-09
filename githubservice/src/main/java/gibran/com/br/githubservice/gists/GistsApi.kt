@@ -1,7 +1,7 @@
 package gibran.com.br.githubservice.gists
 
 import gibran.com.br.githubservice.GitHubApiModule
-import gibran.com.br.githubservice.model.Gist
+import gibran.com.br.githubservice.model.GistOwner
 import io.reactivex.Observable
 import timber.log.Timber
 
@@ -18,12 +18,12 @@ object GistsApi {
     }
 
     fun publicGists(page: Int, perPage: Int = 20)
-            : Observable<List<Gist>> {
+            : Observable<List<GistOwner>> {
         return gistsService.publicGists(page, perPage)
                 .doOnError { e -> Timber.e(e, "publicGists: %s", e.message) }
     }
 
-    fun gist(id: String): Observable<Gist> {
+    fun gist(id: String): Observable<GistOwner> {
         return gistsService.gist(id)
                 .doOnError { e -> Timber.e(e, "gist: %s", e.message) }
     }

@@ -14,7 +14,6 @@ data class Gist(var gistsUrl: String? = null,
                 var eventsUrl: String? = null,
                 var htmlUrl: String? = null,
                 var siteAdmin: Boolean = false,
-                var isPublic: Boolean = false,
                 var id: Int = 0,
                 var gravatarId: String? = null,
                 var organizationsUrl: String? = null)
