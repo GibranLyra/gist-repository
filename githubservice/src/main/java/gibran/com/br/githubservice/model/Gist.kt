@@ -1,19 +1,24 @@
 package gibran.com.br.githubservice.model
 
-data class Gist(var gistsUrl: String? = null,
-                var reposUrl: String? = null,
-                var followingUrl: String? = null,
-                var starredUrl: String? = null,
-                var login: String? = null,
-                var followersUrl: String? = null,
-                var type: String? = null,
-                var url: String? = null,
-                var subscriptionsUrl: String? = null,
-                var receivedEventsUrl: String? = null,
-                var avatarUrl: String? = null,
-                var eventsUrl: String? = null,
-                var htmlUrl: String? = null,
-                var siteAdmin: Boolean = false,
-                var id: Int = 0,
-                var gravatarId: String? = null,
-                var organizationsUrl: String? = null)
+/**
+ * Created by gibranlyra on 09/01/18 for gist_consumer.
+ */
+data class Gist(var url:String? = null,
+                var forksUrl:String? = null,
+                var commitsUrl:String? = null,
+                val id:String,
+                var gitPullUrl:String? = null,
+                var gitPushUrl:String? = null,
+                var htmUrl:String? = null,
+                var files: Files? = null,
+                var isPublic: Boolean = false,
+                var createdAt :String? = null,
+                var updatedAt :String? = null,
+                var description :String? = null,
+                var comments :String? = null,
+                var user :Any? = null,
+                var commentsUrl :String? = null,
+                var owner: Owner? = null,
+                var forks :List<Fork?>? = null,
+                var history :List<History?>? = null,
+                var truncated :Boolean = false)

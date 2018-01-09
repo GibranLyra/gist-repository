@@ -1,7 +1,8 @@
 package gibran.com.br.githubservice.gists
 
 import gibran.com.br.githubservice.GitHubApiModule
-import gibran.com.br.githubservice.model.GistOwner
+import gibran.com.br.githubservice.model.Gist
+import gibran.com.br.githubservice.model.Owner
 import io.reactivex.Observable
 import timber.log.Timber
 
@@ -17,13 +18,12 @@ object GistsApi {
         gistsService = retrofit.create(GistsService::class.java)
     }
 
-    fun publicGists(page: Int, perPage: Int = 20)
-            : Observable<List<GistOwner>> {
+    fun publicGists(page: Int, perPage: Int = 20): Observable<List<Gist>> {
         return gistsService.publicGists(page, perPage)
                 .doOnError { e -> Timber.e(e, "publicGists: %s", e.message) }
     }
 
-    fun gist(id: String): Observable<GistOwner> {
+    fun gist(id: String): Observable<Gist> {
         return gistsService.gist(id)
                 .doOnError { e -> Timber.e(e, "gist: %s", e.message) }
     }

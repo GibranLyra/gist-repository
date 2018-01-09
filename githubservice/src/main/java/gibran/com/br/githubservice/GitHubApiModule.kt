@@ -17,7 +17,7 @@ internal const val BASE_URL: String = "https://api.github.com/"
 object GitHubApiModule {
     lateinit var retrofit: Retrofit private set
 
-    fun setRetrofit(logLevel: LoggingInterceptor.Level = LoggingInterceptor.Level.BASIC) {
+    fun setRetrofit(logLevel: LoggingInterceptor.Level = LoggingInterceptor.Level.FULL) {
         val builder = OkHttpClient.Builder()
 
         val loggingInterceptor = LoggingInterceptor(Clock.systemDefaultZone(), logLevel)
