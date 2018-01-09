@@ -12,7 +12,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -28,7 +27,6 @@ ext {
     anko_version = '0.10.3'
     rx_java_version = '2.1.7'
     rx_android_version = '2.0.1'
-    multidex_version = '1.0.2'
 }
 
 dependencies {
@@ -50,7 +48,9 @@ dependencies {
 
     //Timber
     implementation "com.jakewharton.timber:timber:$rootProject.ext.timberVersion"
-    
+    // Timezone
+    implementation "com.jakewharton.threetenabp:threetenabp:1.0.5"
+
     // Dependencies for local unit tests
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
