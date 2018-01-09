@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-const val GISTS = "gists/"
+internal const val GISTS = "gists/"
 
 /**
  * Created by gibranlyra on 09/01/18 for gist_consumer.

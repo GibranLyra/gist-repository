@@ -33,6 +33,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
+    // GitHub Service
+    implementation project(path: ':githubservice')
+
     //AppCompat
     implementation "com.android.support:appcompat-v7:$appcompat_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -40,8 +43,9 @@ dependencies {
     implementation "com.android.support:support-v4:${appcompat_version}"
     implementation "com.android.support:design:${support_version}"
 
-    // GitHub Service
-    implementation project(path: ':githubservice')
+    // RxJava and RxAndroid
+    implementation "io.reactivex.rxjava2:rxjava:${rx_java_version}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rx_android_version}"
 
     // AnKo
     implementation "org.jetbrains.anko:anko:${anko_version}"

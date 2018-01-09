@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val API_VERSION: String = "v3/"
+internal const val BASE_URL: String = "https://api.github.com/"
 
 /**
  * Created by gibran.lyra on 23/08/2017.
@@ -25,10 +25,10 @@ object GitHubApiModule {
 
         val okClient = builder.build()
         retrofit = Retrofit.Builder()
-                .baseUrl("https://developer.github.com/".plus(API_VERSION))
+                .baseUrl(BASE_URL)
                 .client(okClient)
                 .addConverterFactory(GsonConverterFactory.create(
-                        GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create()))
+                        GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
     }
