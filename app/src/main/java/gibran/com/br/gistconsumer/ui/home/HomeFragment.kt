@@ -3,10 +3,12 @@ package gibran.com.br.gistconsumer.ui.home
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import gibran.com.br.gistconsumer.R
+import gibran.com.br.gistconsumer.ui.recycler.gist.GistAdapter
 import gibran.com.br.gistconsumer.ui.showSnackBar
 import gibran.com.br.githubservice.model.Gist
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -65,5 +67,9 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun showGists(gists: List<Gist>) {
         hasLoaded = true
+        gistsRecycler.layoutManager = LinearLayoutManager(context)
+        gistsRecycler.adapter = GistAdapter(gists) {
+
+        }
     }
 }

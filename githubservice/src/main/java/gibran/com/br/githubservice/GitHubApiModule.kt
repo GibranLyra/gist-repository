@@ -2,6 +2,7 @@ package gibran.com.br.githubservice
 
 
 import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import org.threeten.bp.Clock
@@ -19,7 +20,6 @@ object GitHubApiModule {
 
     fun setRetrofit(logLevel: LoggingInterceptor.Level = LoggingInterceptor.Level.FULL) {
         val builder = OkHttpClient.Builder()
-
         val loggingInterceptor = LoggingInterceptor(Clock.systemDefaultZone(), logLevel)
         builder.addInterceptor(loggingInterceptor)
 
@@ -27,9 +27,15 @@ object GitHubApiModule {
         retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(okClient)
-                .addConverterFactory(GsonConverterFactory.create(
-                        GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()))
+                .addConverterFactory(GsonConverterFactory.create(getGsonBuilder()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
+    }
+
+    fun getGsonBuilder(): Gson {
+        return GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setPrettyPrinting()
+                .create()
     }
 }
