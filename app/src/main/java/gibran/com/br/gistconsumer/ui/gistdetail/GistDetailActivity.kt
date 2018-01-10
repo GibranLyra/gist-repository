@@ -26,7 +26,8 @@ class GistDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gist_detail)
         setupActionBar(R.id.toolbar) {
-            setDisplayHomeAsUpEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
         }
         initData()
         openGistDetailFragment()

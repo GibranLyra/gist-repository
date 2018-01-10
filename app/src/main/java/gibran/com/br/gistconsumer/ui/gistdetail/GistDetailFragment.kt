@@ -7,9 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import gibran.com.br.gistconsumer.R
+import gibran.com.br.gistconsumer.ui.GlideApp
 import gibran.com.br.gistconsumer.ui.showSnackBar
 import gibran.com.br.githubservice.model.Gist
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_gist_detail.*
 
 /**
  * Created by gibranlyra on 10/01/18 for gist_consumer.
@@ -77,6 +78,13 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
     }
 
     override fun showGist(gist: Gist) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        gistDescription.text = gist.description
+        gistAuthor.text = gist.owner?.login
+        gistLanguage.text = gist.files?.file?.toString()
+        GlideApp.with(this)
+                .load(gist.owner?.avatarUrl)
+                .centerCrop()
+                .placeholder(R.drawable.notification_template_icon_bg)
+                .into(authorImage)
     }
 }

@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="gibran.com.br.gistconsumer.ui.gistdetail.GistDetailActivity"/>
+        <activity android:name="gibran.com.br.gistconsumer.ui.gistdetail.GistDetailActivity"
+                  android:parentActivityName=".ui.home.HomeActivity"/>
     </application>
 
 </manifest>
