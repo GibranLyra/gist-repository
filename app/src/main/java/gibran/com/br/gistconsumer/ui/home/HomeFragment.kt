@@ -52,15 +52,15 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun showLoading(show: Boolean) {
-        when {
-            show -> loadingProgressBar.show()
+        when (show){
+            true -> loadingProgressBar.show()
             else -> loadingProgressBar.hide()
         }
     }
 
     override fun showError(show: Boolean) {
-        when {
-            show -> view?.showSnackBar(getString(R.string.generic_error), Snackbar.LENGTH_LONG,
+        when(show) {
+            true -> view?.showSnackBar(getString(R.string.generic_error), Snackbar.LENGTH_LONG,
                     getString(R.string.try_again), { presenter.loadGists() })
         }
     }
@@ -69,7 +69,6 @@ class HomeFragment : Fragment(), HomeContract.View {
         hasLoaded = true
         gistsRecycler.layoutManager = LinearLayoutManager(context)
         gistsRecycler.adapter = GistAdapter(gists) {
-
         }
     }
 }

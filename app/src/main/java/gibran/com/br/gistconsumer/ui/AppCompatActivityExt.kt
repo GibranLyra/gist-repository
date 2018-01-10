@@ -23,6 +23,12 @@ fun AppCompatActivity.replaceFragmentInActivity(fragment: Fragment, frameId: Int
     }
 }
 
+fun AppCompatActivity.replaceFragmentInActivity(fragment: Fragment, frameId: Int, tag: String) {
+    supportFragmentManager.transact {
+        replace(frameId, fragment, tag)
+    }
+}
+
 /**
  * The `fragment` is added to the container view with tag. The operation is
  * performed by the `fragmentManager`.
