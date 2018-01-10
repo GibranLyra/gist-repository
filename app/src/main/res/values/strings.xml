@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">gist_consumer</string>
+    <string name="generic_error">Ocorreu um erro</string>
+    <string name="try_again">Tentar Novamente</string>
 </resources>
