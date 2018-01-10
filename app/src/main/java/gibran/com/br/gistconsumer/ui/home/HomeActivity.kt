@@ -23,6 +23,7 @@ class HomeActivity : AppCompatActivity() {
             changeFragment(it.itemId)
             return@setOnNavigationItemSelectedListener true
         }
+        openHomeFragment()
     }
 
     private fun openHomeFragment() {

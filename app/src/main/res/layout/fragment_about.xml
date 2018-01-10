@@ -36,7 +36,7 @@
         android:layout_gravity="center_horizontal"
         android:autoLink="web|email"
         android:text="lyra.gibran@gmail.com"
-        android:textSize="18dp"/>
+        android:textSize="18sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +44,18 @@
         android:layout_gravity="center_horizontal"
         android:autoLink="web"
         android:text="https://github.com/GibranLyra"
-        android:textSize="18dp"/>
+        android:textSize="18sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:autoLink="phone"
+        android:textColor="@color/colorAccent"
+        android:text="(11) 97493-3928"
+        android:linksClickable="true"
+        android:textSize="18sp"/>
+
 
     <Button
         android:layout_width="wrap_content"
