@@ -2,7 +2,7 @@ package gibran.com.br.gistconsumer.ui.home
 
 import br.com.net.nowonline.presentation.util.schedulers.BaseSchedulerProvider
 import gibran.com.br.gistconsumer.util.ObserverHelper
-import gibran.com.br.githubservice.gists.GistsApi
+import gibran.com.br.githubservice.gists.GistsDataSource
 import io.reactivex.disposables.Disposable
 
 private const val PAGE_SIZE = 20
@@ -10,7 +10,7 @@ private const val PAGE_SIZE = 20
 /**
  * Created by gibranlyra on 10/01/18 for gist_consumer.
  */
-class HomePresenter(private val gistsApi: GistsApi,
+class HomePresenter(private val gistsDataSource: GistsDataSource,
                     private val view: HomeContract.View,
                     private val schedulerProvider: BaseSchedulerProvider) : HomeContract.Presenter {
 
@@ -36,7 +36,7 @@ class HomePresenter(private val gistsApi: GistsApi,
         }
         view.showError(false)
         view.showErrorNoData(false)
-        gistsRequest = gistsApi.publicGists(page, PAGE_SIZE)
+        gistsRequest = gistsDataSource.publicGists(page, PAGE_SIZE)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .doOnTerminate({
