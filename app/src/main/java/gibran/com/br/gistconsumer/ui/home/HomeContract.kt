@@ -15,7 +15,7 @@ public interface HomeContract {
     }
 
     interface Presenter : BaseContractPresenter {
-        fun loadGists()
+        fun loadGists(page: Int)
     }
 }
 

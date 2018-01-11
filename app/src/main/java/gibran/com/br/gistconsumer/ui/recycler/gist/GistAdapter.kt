@@ -3,6 +3,7 @@ package gibran.com.br.gistconsumer.ui.recycler.gist
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import gibran.com.br.gistconsumer.R
 import gibran.com.br.gistconsumer.ui.GlideApp
 import gibran.com.br.gistconsumer.ui.inflate
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.gist_item.view.*
  */
 class GistAdapter(private val items: MutableList<Gist>,
                   private val listener: (Gist) -> Unit) : RecyclerView.Adapter<GistViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             GistViewHolder(parent.inflate(R.layout.gist_item))
 

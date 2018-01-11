@@ -22,10 +22,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var presenter: HomeContract.Presenter
 
     private var hasLoaded = false
-    private var loading = true
-    var pastVisiblesItems: Int = 0
-    var visibleItemCount: Int = 0
-    var totalItemCount: Int = 0
+    private var page = 0
 
     companion object {
 
@@ -40,14 +37,14 @@ class HomeFragment : Fragment(), HomeContract.View {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
             //TODO get list from bundle
-            presenter.loadGists()
+            presenter.loadGists(page)
         }
     }
 
     override fun onResume() {
         super.onResume()
         if (!hasLoaded) {
-            presenter.loadGists()
+            presenter.loadGists(0)
         }
     }
 
@@ -69,7 +66,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     override fun showError(show: Boolean) {
         when (show) {
             true -> view?.showSnackBar(getString(R.string.generic_error), Snackbar.LENGTH_LONG,
-                    getString(R.string.try_again), { presenter.loadGists() })
+                    getString(R.string.try_again), { presenter.loadGists(page) })
         }
     }
 
@@ -90,18 +87,20 @@ class HomeFragment : Fragment(), HomeContract.View {
         }
         gistsRecycler.setHasFixedSize(true)
         gistsRecycler.addOnScrolledToEnd {
-            presenter.loadGists()
+            page = it
+            presenter.loadGists(page)
         }
     }
 }
 
-fun RecyclerView.addOnScrolledToEnd(onScrolledToEnd: () -> Unit) {
+fun RecyclerView.addOnScrolledToEnd(onScrolledToEnd: (Int) -> Unit) {
 
     this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
         private val VISIBLE_THRESHOLD = 5
 
         private var loading = true
         private var previousTotal = 0
+        private var page = 0
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             with(layoutManager as LinearLayoutManager) {
@@ -113,7 +112,8 @@ fun RecyclerView.addOnScrolledToEnd(onScrolledToEnd: () -> Unit) {
                     previousTotal = totalItemCount
                 }
                 if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_THRESHOLD)) {
-                    onScrolledToEnd()
+                    page++
+                    onScrolledToEnd(page)
                     loading = true
                 }
             }
