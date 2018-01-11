@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="generic_error">Ocorreu um erro.</string>
+    <string name="try_again">Tentar Novamente</string>
+    <string name="content_description_gist_image_">Gist Image</string>
+    <string name="bottom_navigation_menu_home_title">Home</string>
+    <string name="bottom_navigation_menu_favorite_title">Favorites</string>
+    <string name="bottom_navigation_menu_about_title">About App</string>
+    <string name="logout">Logout</string>
+    <string name="about_image_content_description">About image</string>
+    <string name="error_image_content_description">Error Image</string>
+</resources>
