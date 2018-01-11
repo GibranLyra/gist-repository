@@ -20,6 +20,7 @@ internal const val EXTRA_GIST_ID = "EXTRA_GIST_ID"
 
 class GistDetailFragment : Fragment(), GistDetailContract.View {
     private lateinit var presenter: GistDetailContract.Presenter
+    private var gist: Gist? = null
     private var gistId: String? = null
     private var hasLoaded = false
 
@@ -46,6 +47,7 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
             //TODO get list from bundle
             gistId?.let { presenter.loadGist(it) }
         }
+        favoriteButton.setOnClickListener({ favoriteSaved() })
     }
 
     override fun onResume() {
@@ -82,13 +84,23 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
     }
 
     override fun showGist(gist: Gist) {
+        this.gist = gist
         gistDescription.text = gist.description
         gistAuthor.text = gist.owner?.login
-        gistLanguage.text = gist.files?.file?.toString()
+        gistLanguage.text = gist.files?.file
         GlideApp.with(this)
                 .load(gist.owner?.avatarUrl)
                 .centerCrop()
                 .placeholder(R.drawable.notification_template_icon_bg)
                 .into(authorImage)
+    }
+
+    override fun favoriteSaved() {
+        gist?.let { presenter.saveFavorite(it) }
+    }
+
+    override fun saveFavoriteError() {
+        view?.showSnackBar(getString(R.string.save_favorite_error), Snackbar.LENGTH_LONG,
+                getString(R.string.try_again), { favoriteSaved() })
     }
 }

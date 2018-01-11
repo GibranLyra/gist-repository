@@ -23,8 +23,6 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
 
     private var hasLoaded = false
 
-    private var page = 0
-
     companion object {
         fun newInstance(): FavoriteFragment = FavoriteFragment()
     }
@@ -80,8 +78,8 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
             true -> {
                 view?.showSnackBar(getString(R.string.generic_error), Snackbar.LENGTH_LONG,
                         getString(R.string.try_again), { presenter.loadFavorites() })
-                errorView.visibility = View.GONE
-            } else -> errorView.visibility = View.VISIBLE
+                errorView.visibility = View.VISIBLE
+            } else -> errorView.visibility = View.GONE
         }
     }
     override fun showFavorites(gists: List<Gist>) {
@@ -101,7 +99,6 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
         }
         gistsRecycler.setHasFixedSize(true)
         gistsRecycler.addOnScrolledToEnd {
-            page = it
             presenter.loadFavorites()
         }
     }

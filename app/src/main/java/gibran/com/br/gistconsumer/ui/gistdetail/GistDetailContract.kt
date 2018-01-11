@@ -12,10 +12,13 @@ public interface GistDetailContract {
         fun showLoading(show: Boolean)
         fun showError(show: Boolean)
         fun showGist(gist: Gist)
+        fun favoriteSaved()
+        fun saveFavoriteError()
     }
 
     interface Presenter : BaseContractPresenter {
         fun loadGist(gistId: String)
+        fun saveFavorite(gist: Gist)
     }
 }
 

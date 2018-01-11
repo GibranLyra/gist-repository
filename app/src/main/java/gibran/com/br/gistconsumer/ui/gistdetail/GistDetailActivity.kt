@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import br.com.net.nowonline.presentation.util.schedulers.SchedulerProvider
+import gibran.com.br.gistconsumer.AppContext
 import gibran.com.br.gistconsumer.R
 import gibran.com.br.gistconsumer.ui.replaceFragmentInActivity
 import gibran.com.br.gistconsumer.ui.setupActionBar
@@ -49,7 +50,7 @@ class GistDetailActivity : AppCompatActivity() {
                     as GistDetailFragment? ?: GistDetailFragment.newInstance(it).also {
                 replaceFragmentInActivity(it, R.id.contentFrame)
             }
-            GistDetailPresenter(GistsApi, fragment, SchedulerProvider)
+            GistDetailPresenter(GistsApi, AppContext.instance.database, fragment, SchedulerProvider)
         } ?: run {
             throw RuntimeException("Gist id cannot be null.")
         }

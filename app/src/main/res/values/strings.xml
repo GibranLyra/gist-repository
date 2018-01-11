@@ -8,4 +8,5 @@
     <string name="logout">Logout</string>
     <string name="about_image_content_description">About image</string>
     <string name="error_image_content_description">Error Image</string>
+    <string name="save_favorite_error">Não foi possível salvar o favorito.</string>
 </resources>
