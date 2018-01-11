@@ -2,6 +2,8 @@ package gibran.com.br.gistconsumer.ui.home
 
 import android.os.Bundle
 import android.support.annotation.IdRes
+import android.support.annotation.VisibleForTesting
+import android.support.test.espresso.IdlingResource
 import android.support.v7.app.AppCompatActivity
 import br.com.net.nowonline.presentation.util.schedulers.SchedulerProvider
 import gibran.com.br.gistconsumer.AppContext
@@ -11,6 +13,7 @@ import gibran.com.br.gistconsumer.ui.favorite.FavoriteFragment
 import gibran.com.br.gistconsumer.ui.favorite.FavoritePresenter
 import gibran.com.br.gistconsumer.ui.replaceFragmentInActivity
 import gibran.com.br.gistconsumer.ui.setupActionBar
+import gibran.com.br.gistconsumer.util.tests.EspressoIdlingResource
 import gibran.com.br.githubservice.gists.GistsApi
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -59,4 +62,8 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    @VisibleForTesting
+    fun getCountingIdlingResource(): IdlingResource {
+        return EspressoIdlingResource.idlingResource
+    }
 }

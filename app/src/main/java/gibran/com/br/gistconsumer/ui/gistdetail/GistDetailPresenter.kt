@@ -2,6 +2,7 @@ package gibran.com.br.gistconsumer.ui.gistdetail
 
 import br.com.net.nowonline.presentation.util.schedulers.BaseSchedulerProvider
 import gibran.com.br.gistconsumer.util.ObserverHelper
+import gibran.com.br.gistconsumer.util.tests.EspressoIdlingResource
 import gibran.com.br.githubservice.gists.GistsApi
 import gibran.com.br.githubservice.model.Gist
 import gibran.com.br.githubservice.room.MyDatabase
@@ -34,10 +35,18 @@ class GistDetailPresenter(private val gistsApi: GistsApi,
     override fun loadGist(gistId: String) {
         view.showLoading(true)
         view.showError(false)
+        // The network request might be handled in a different thread so make sure Espresso knows
+        // that the app is busy until the response is handled.
+        EspressoIdlingResource.increment() // App is busy until further notice
         gistRequest = gistsApi.gist(gistId)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .doOnTerminate({ view.showLoading(false) })
+                .doOnTerminate({
+                    view.showLoading(false)
+                    if (!EspressoIdlingResource.idlingResource.isIdleNow) {
+                        EspressoIdlingResource.decrement() // Set app as idle.
+                    }
+                })
                 .subscribe({ view.showGist(it) },
                         { view.showError(true) })
 
