@@ -22,13 +22,13 @@ class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var presenter: HomeContract.Presenter
 
     private var hasLoaded = false
-    private var page = 0
 
+    private var page = 0
     companion object {
 
         fun newInstance(): HomeFragment = HomeFragment()
-    }
 
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
@@ -60,6 +60,13 @@ class HomeFragment : Fragment(), HomeContract.View {
         when (show) {
             true -> loadingProgressBar.show()
             else -> loadingProgressBar.hide()
+        }
+    }
+
+    override fun showBottomLoading(show: Boolean) {
+        when (show) {
+            true -> bottomProgressBar.show()
+            else -> bottomProgressBar.hide()
         }
     }
 

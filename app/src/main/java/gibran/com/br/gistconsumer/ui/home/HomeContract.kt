@@ -10,6 +10,7 @@ import gibran.com.br.githubservice.model.Gist
 public interface HomeContract {
     interface View : BaseContractView<HomeContract.Presenter> {
         fun showLoading(show: Boolean)
+        fun showBottomLoading(show: Boolean)
         fun showError(show: Boolean)
         fun showGists(gists: List<Gist>)
     }

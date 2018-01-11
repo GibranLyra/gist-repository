@@ -30,13 +30,20 @@ class HomePresenter(private val gistsApi: GistsApi,
     }
 
     override fun loadGists(page: Int) {
-        view.showLoading(true)
+        when(page) {
+            0 -> view.showLoading(true)
+            else -> view.showBottomLoading(true)
+        }
         view.showError(false)
-
         gistsRequest = gistsApi.publicGists(page, PAGE_SIZE)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .doOnTerminate({ view.showLoading(false) })
+                .doOnTerminate({
+                    when(page) {
+                        0 -> view.showLoading(false)
+                        else -> view.showBottomLoading(false)
+                    }
+                })
                 .subscribe({ view.showGists(it) },
                         { view.showError(true) })
     }
