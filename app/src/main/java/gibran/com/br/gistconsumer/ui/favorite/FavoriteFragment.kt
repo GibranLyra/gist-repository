@@ -20,8 +20,6 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class FavoriteFragment : Fragment(), FavoriteContract.View {
     private lateinit var presenter: FavoriteContract.Presenter
 
-    private var hasLoaded = false
-
     companion object {
         fun newInstance(): FavoriteFragment = FavoriteFragment()
     }
@@ -46,9 +44,7 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
 
     override fun onResume() {
         super.onResume()
-        if (!hasLoaded) {
-            presenter.loadFavorites()
-        }
+        presenter.loadFavorites()
     }
 
     override fun isActive(): Boolean {
@@ -87,7 +83,6 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
         favoritesRecycler.adapter?.let {
             (it as GistAdapter).add(gists.toMutableList())
         } ?: run {
-            hasLoaded = true
             setupRecycler(gists)
         }
     }
