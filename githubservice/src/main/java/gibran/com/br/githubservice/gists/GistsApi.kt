@@ -46,14 +46,9 @@ object GistsApi : GistsDataSource {
     private fun parseFile(it: JsonArray): List<Gist> {
         val gson = GitHubApiModule.getGsonBuilder()
         val parsedGist: List<Gist> = gson.fromJson(gson.toJson(it), object : TypeToken<List<Gist>>() {}.type)
-
         for (i in parsedGist.indices) {
-            it[0].asJsonObject["files"]?.let { filesJson ->
-                val entries = filesJson.asJsonObject.entrySet()
-                for ((key) in entries) {
-                    parsedGist[i].files?.file = gson.fromJson(filesJson.asJsonObject[key], File::class.java)
-                }
-
+            it[i].asJsonObject["files"]?.let { filesJson ->
+                parseGist(filesJson, parsedGist[i])
             }
         }
         return parsedGist
