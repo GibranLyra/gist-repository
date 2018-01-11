@@ -13,7 +13,7 @@ class HomePresenter(private val gistsApi: GistsApi,
                     private val schedulerProvider: BaseSchedulerProvider) : HomeContract.Presenter {
 
     private var gistsRequest: Disposable? = null
-
+    private var times = 0
     init {
         view.setPresenter(this)
     }
@@ -30,12 +30,12 @@ class HomePresenter(private val gistsApi: GistsApi,
     override fun loadGists() {
         view.showLoading(true)
         view.showError(false)
-        gistsRequest = gistsApi.publicGists(0, 20)
+        gistsRequest = gistsApi.publicGists(times, 20)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .doOnTerminate({ view.showLoading(false) })
                 .subscribe({ view.showGists(it) },
                         { view.showError(true) })
-
+        times++
     }
 }

@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.gist_item.view.*
 /**
  * Created by gibranlyra on 10/01/18 for gist_consumer.
  */
-class GistAdapter(private val items: List<Gist>,
+class GistAdapter(private val items: MutableList<Gist>,
                   private val listener: (Gist) -> Unit) : RecyclerView.Adapter<GistViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             GistViewHolder(parent.inflate(R.layout.gist_item))
@@ -20,6 +20,12 @@ class GistAdapter(private val items: List<Gist>,
     override fun onBindViewHolder(holder: GistViewHolder, position: Int) = holder.bind(items[position], listener)
 
     override fun getItemCount() = items.size
+
+    internal fun add(gists: List<Gist>) {
+        val adapterSize = items.size
+        items.addAll(gists)
+        notifyItemRangeInserted(adapterSize, gists.size)
+    }
 }
 
 class GistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
