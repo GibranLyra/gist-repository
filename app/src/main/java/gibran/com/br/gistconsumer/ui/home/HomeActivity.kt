@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.v7.app.AppCompatActivity
 import br.com.net.nowonline.presentation.util.schedulers.SchedulerProvider
+import gibran.com.br.gistconsumer.AppContext
 import gibran.com.br.gistconsumer.R
 import gibran.com.br.gistconsumer.ui.about.AboutFragment
 import gibran.com.br.gistconsumer.ui.favorite.FavoriteFragment
+import gibran.com.br.gistconsumer.ui.favorite.FavoritePresenter
 import gibran.com.br.gistconsumer.ui.replaceFragmentInActivity
 import gibran.com.br.gistconsumer.ui.setupActionBar
 import gibran.com.br.githubservice.gists.GistsApi
@@ -41,7 +43,12 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun openFavoriteFragment() {
-        replaceFragmentInActivity(FavoriteFragment.newInstance(), R.id.contentFrame)
+        val favoriteId = "favoriteId"
+        val fragment = supportFragmentManager.findFragmentByTag(favoriteId)
+                as FavoriteFragment? ?: FavoriteFragment.newInstance().also {
+            replaceFragmentInActivity(it, R.id.contentFrame, favoriteId)
+        }
+        FavoritePresenter(AppContext.instance.database, fragment, SchedulerProvider)
     }
 
     private fun changeFragment(@IdRes itemId: Int) {
