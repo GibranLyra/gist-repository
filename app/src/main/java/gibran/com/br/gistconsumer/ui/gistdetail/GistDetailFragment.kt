@@ -17,17 +17,18 @@ import kotlinx.android.synthetic.main.fragment_gist_detail.*
  */
 
 internal const val EXTRA_GIST_ID = "EXTRA_GIST_ID"
+private const val GIST_RESULT = "gistResult"
+private const val HAS_LOADED = "hasLoaded"
 
 class GistDetailFragment : Fragment(), GistDetailContract.View {
     private lateinit var presenter: GistDetailContract.Presenter
 
-    private var gist: Gist? = null
+    private lateinit var gist: Gist
 
     private var gistId: String? = null
     private var hasLoaded = false
 
     companion object {
-
         fun newInstance(gistId: String): GistDetailFragment {
             val fragment = GistDetailFragment()
             val bundle = Bundle()
@@ -46,8 +47,13 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
-            //TODO get list from bundle
-            gistId?.let { presenter.loadGist(it) }
+            hasLoaded = savedInstanceState.getBoolean(HAS_LOADED, false)
+            when (hasLoaded) {
+                true -> {
+                    gist = savedInstanceState.getParcelable(GIST_RESULT) as Gist
+                    showGist(gist)
+                }
+            }
         }
     }
 
@@ -57,6 +63,12 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
             gistId?.let { presenter.loadGist(it) }
             gistId?.let { presenter.checkFavorite(it) }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(GIST_RESULT, gist)
+        outState.putBoolean(HAS_LOADED, hasLoaded)
     }
 
     override fun isActive(): Boolean {
@@ -102,14 +114,14 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
 
     override fun saveFavoriteError() {
         view?.showSnackBar(getString(R.string.save_favorite_error), Snackbar.LENGTH_LONG,
-                getString(R.string.try_again), { gist?.let { presenter.saveFavorite(it) } })
+                getString(R.string.try_again), { gist.let { presenter.saveFavorite(it) } })
     }
 
     override fun favoriteRemoved() = isFavorite(false)
 
     override fun removedFavoriteError() {
         view?.showSnackBar(getString(R.string.remove_favorite_message), Snackbar.LENGTH_LONG,
-                getString(R.string.try_again), { gist?.let { presenter.removeFavorite(it) } })
+                getString(R.string.try_again), { gist.let { presenter.removeFavorite(it) } })
     }
 
     override fun isFavorite(isFavorite: Boolean) {
@@ -117,7 +129,7 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
             true -> {
                 favoriteButton.setImageResource(R.drawable.ic_favorite_filled)
                 favoriteButton.setOnClickListener({
-                    gist?.let { gist ->
+                    gist.let { gist ->
                         presenter.removeFavorite(gist)
                     }
                 })

@@ -22,10 +22,10 @@ object GistsApi : GistsDataSource {
         gistsService = retrofit.create(GistsService::class.java)
     }
 
-    override fun publicGists(page: Int, perPage: Int): Observable<List<Gist>> {
+    override fun publicGists(page: Int, perPage: Int): Observable<ArrayList<Gist>> {
         return gistsService.publicGists(page, perPage)
                 .flatMap {
-                    val parsedGist: List<Gist> = parseFile(it)
+                    val parsedGist: ArrayList<Gist> = parseFile(it)
                     return@flatMap Observable.just(parsedGist)
                 }
                 .doOnError { e -> Timber.e(e, "publicGists: %s", e.message) }
@@ -43,9 +43,9 @@ object GistsApi : GistsDataSource {
     }
 
     /* A extra job is required because file key is dynamic, we need to manually set the file property */
-    private fun parseFile(it: JsonArray): List<Gist> {
+    private fun parseFile(it: JsonArray): ArrayList<Gist> {
         val gson = GitHubApiModule.getGsonBuilder()
-        val parsedGist: List<Gist> = gson.fromJson(gson.toJson(it), object : TypeToken<List<Gist>>() {}.type)
+        val parsedGist: ArrayList<Gist> = gson.fromJson(gson.toJson(it), object : TypeToken<ArrayList<Gist>>() {}.type)
         for (i in parsedGist.indices) {
             it[i].asJsonObject["files"]?.let { filesJson ->
                 parseGist(filesJson, parsedGist[i])

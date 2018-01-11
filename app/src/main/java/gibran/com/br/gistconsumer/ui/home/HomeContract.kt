@@ -13,7 +13,7 @@ public interface HomeContract {
         fun showBottomLoading(show: Boolean)
         fun showError(show: Boolean)
         fun showErrorNoData(show: Boolean)
-        fun showGists(gists: List<Gist>)
+        fun showGists(gists: ArrayList<Gist>)
     }
 
     interface Presenter : BaseContractPresenter {

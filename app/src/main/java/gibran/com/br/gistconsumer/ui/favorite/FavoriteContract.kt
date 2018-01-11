@@ -11,7 +11,7 @@ public interface FavoriteContract {
     interface View : BaseContractView<FavoriteContract.Presenter> {
         fun showLoading(show: Boolean)
         fun showError(show: Boolean)
-        fun showFavorites(gists: List<Gist>)
+        fun showFavorites(gists: ArrayList<Gist>)
     }
 
     interface Presenter : BaseContractPresenter {

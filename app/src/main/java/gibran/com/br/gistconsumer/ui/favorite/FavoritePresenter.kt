@@ -3,6 +3,7 @@ package gibran.com.br.gistconsumer.ui.favorite
 import br.com.net.nowonline.presentation.util.schedulers.BaseSchedulerProvider
 import gibran.com.br.gistconsumer.util.ObserverHelper
 import gibran.com.br.gistconsumer.util.tests.EspressoIdlingResource
+import gibran.com.br.githubservice.model.Gist
 import gibran.com.br.githubservice.room.MyDatabase
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
@@ -47,7 +48,7 @@ class FavoritePresenter(private val database: MyDatabase,
                     }
                 })
 
-                .subscribe({ view.showFavorites(it) }, {
+                .subscribe({ view.showFavorites(it as ArrayList<Gist>) }, {
                     Timber.e(it, "loadFavorites: %s", it.message)
                     view.showError(true)
                 })

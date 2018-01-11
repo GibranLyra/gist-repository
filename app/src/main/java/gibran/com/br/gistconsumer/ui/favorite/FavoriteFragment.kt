@@ -79,16 +79,16 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
         }
     }
 
-    override fun showFavorites(gists: List<Gist>) {
+    override fun showFavorites(gists: ArrayList<Gist>) {
         favoritesRecycler.adapter?.let {
             (it as GistAdapter).clear()
-            it.add(gists.toMutableList())
+            it.add(gists)
         } ?: run {
             setupRecycler(gists)
         }
     }
 
-    private fun setupRecycler(gists: List<Gist>) {
+    private fun setupRecycler(gists: ArrayList<Gist>) {
         favoritesRecycler.layoutManager = LinearLayoutManager(context)
         favoritesRecycler.adapter = GistAdapter(gists.toMutableList()) { gist, view ->
             context?.let { context -> GistDetailActivity.createIntent(context, gist.id, view) }

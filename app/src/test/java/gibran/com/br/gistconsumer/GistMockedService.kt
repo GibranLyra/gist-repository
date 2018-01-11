@@ -12,16 +12,16 @@ import java.io.InputStreamReader
  * Created by gibranlyra on 11/01/18 for gist_consumer.
  */
 object GistMockedService: GistsDataSource {
-    internal val GISTS: List<Gist>
+    internal val GISTS: ArrayList<Gist>
 
     init {
         val gson = GitHubApiModule.getGsonBuilder()
         val gistsRaw = javaClass.classLoader.getResourceAsStream("publicGistsMockedResponse.json")
         val gistsResponseJson = BufferedReader(InputStreamReader(gistsRaw))
-        GISTS = gson.fromJson(gistsResponseJson, object : TypeToken<List<Gist>>() {}.type)
+        GISTS = gson.fromJson(gistsResponseJson, object : TypeToken<ArrayList<Gist>>() {}.type)
     }
 
-    override fun publicGists(page: Int, perPage: Int): Observable<List<Gist>> {
+    override fun publicGists(page: Int, perPage: Int): Observable<ArrayList<Gist>> {
         return Observable.just(GISTS)
     }
 

@@ -18,12 +18,16 @@ import kotlinx.android.synthetic.main.fragment_home.*
 /**
  * Created by gibranlyra on 10/01/18 for gist_consumer.
  */
+
+private const val GISTS_RESULT = "gistsResult"
+private const val HAS_LOADED = "hasLoaded"
+
 class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var presenter: HomeContract.Presenter
 
     private var hasLoaded = false
-
     private var page = 0
+    private var gists: ArrayList<Gist>? = null
 
     companion object {
         fun newInstance(): HomeFragment = HomeFragment()
@@ -36,8 +40,13 @@ class HomeFragment : Fragment(), HomeContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
-            //TODO get list from bundle
-            presenter.loadGists(page)
+            hasLoaded = savedInstanceState.getBoolean(HAS_LOADED, false)
+            when (hasLoaded) {
+                true -> {
+                    gists = savedInstanceState.getParcelableArrayList(GISTS_RESULT)
+                    gists?.let { showGists(it) }
+                }
+            }
         }
         swipeRefreshLayout.setOnRefreshListener {
             favoritesRecycler.adapter?.let {
@@ -52,6 +61,12 @@ class HomeFragment : Fragment(), HomeContract.View {
         if (!hasLoaded) {
             presenter.loadGists(0)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList(GISTS_RESULT, gists)
+        outState.putBoolean(HAS_LOADED, hasLoaded)
     }
 
     override fun isActive(): Boolean {
@@ -96,16 +111,17 @@ class HomeFragment : Fragment(), HomeContract.View {
         }
     }
 
-    override fun showGists(gists: List<Gist>) {
+    override fun showGists(gists: ArrayList<Gist>) {
         favoritesRecycler.adapter?.let {
-            (it as GistAdapter).add(gists.toMutableList())
+            (it as GistAdapter).add(gists)
         } ?: run {
             hasLoaded = true
             setupRecycler(gists)
         }
     }
 
-    private fun setupRecycler(gists: List<Gist>) {
+    private fun setupRecycler(gists: ArrayList<Gist>) {
+        this.gists = gists
         val linearLayoutManager = LinearLayoutManager(context)
         favoritesRecycler.layoutManager = linearLayoutManager
         favoritesRecycler.adapter = GistAdapter(gists.toMutableList()) { gist, view ->

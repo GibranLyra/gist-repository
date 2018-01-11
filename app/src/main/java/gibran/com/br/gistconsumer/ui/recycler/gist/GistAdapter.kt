@@ -22,7 +22,7 @@ class GistAdapter(private val items: MutableList<Gist>,
 
     override fun getItemCount() = items.size
 
-    internal fun add(gists: List<Gist>) {
+    internal fun add(gists: ArrayList<Gist>) {
         val adapterSize = items.size
         items.addAll(gists)
         notifyItemRangeInserted(adapterSize, gists.size)
