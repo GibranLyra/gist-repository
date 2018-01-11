@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.gist_item.view.*
  * Created by gibranlyra on 10/01/18 for gist_consumer.
  */
 class GistAdapter(private val items: MutableList<Gist>,
-                  private val listener: (Gist) -> Unit) : RecyclerView.Adapter<GistViewHolder>() {
+                  private val listener: (Gist, View) -> Unit) : RecyclerView.Adapter<GistViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             GistViewHolder(parent.inflate(R.layout.gist_item))
@@ -35,7 +35,7 @@ class GistAdapter(private val items: MutableList<Gist>,
 }
 
 class GistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bind(item: Gist, listener: (Gist) -> Unit) = with(itemView) {
+    fun bind(item: Gist, listener: (Gist, View) -> Unit) = with(itemView) {
         gistDescription.text = item.description
         gistAuthor.text = item.owner?.login
         gistLanguage.text = item.files?.file?.toString()
@@ -44,6 +44,6 @@ class GistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .centerCrop()
                 .placeholder(R.drawable.notification_template_icon_bg)
                 .into(authorImage)
-        setOnClickListener { listener(item) }
+        setOnClickListener { listener(item, authorImage) }
     }
 }

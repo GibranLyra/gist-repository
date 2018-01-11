@@ -15,6 +15,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:transitionName="author_image_transition"
             android:id="@+id/authorImage"
             android:layout_width="100dp"
             android:layout_height="120dp"

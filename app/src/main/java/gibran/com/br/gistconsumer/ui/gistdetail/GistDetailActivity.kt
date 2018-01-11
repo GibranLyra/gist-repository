@@ -1,25 +1,28 @@
 package gibran.com.br.gistconsumer.ui.gistdetail
 
+import android.app.Activity
 import android.content.Context
-
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import br.com.net.nowonline.presentation.util.schedulers.SchedulerProvider
 import gibran.com.br.gistconsumer.R
 import gibran.com.br.gistconsumer.ui.replaceFragmentInActivity
 import gibran.com.br.gistconsumer.ui.setupActionBar
 import gibran.com.br.githubservice.gists.GistsApi
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.intentFor
 
 class GistDetailActivity : AppCompatActivity() {
 
     private var gistId: String? = null
 
     companion object {
-        fun createIntent(context: Context, gistId: String) {
-            context.startActivity<GistDetailActivity>(EXTRA_GIST_ID to gistId)
+        fun createIntent(context: Context, gistId: String, transitionView: View) {
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity, transitionView,
+                    "author_image_transition")
+            context.startActivity(context.intentFor<GistDetailActivity>().putExtra(EXTRA_GIST_ID, gistId), options.toBundle())
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

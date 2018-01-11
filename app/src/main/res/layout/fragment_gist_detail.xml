@@ -28,6 +28,7 @@
             android:id="@+id/authorImage"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:transitionName="author_image_transition"
             android:contentDescription="@string/content_description_gist_image_"/>
 
         <TextView

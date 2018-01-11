@@ -28,9 +28,11 @@ class HomeFragment : Fragment(), HomeContract.View {
     companion object {
         fun newInstance(): HomeFragment = HomeFragment()
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
@@ -41,7 +43,8 @@ class HomeFragment : Fragment(), HomeContract.View {
             gistsRecycler.adapter?.let {
                 (it as GistAdapter).clear()
             }
-            presenter.loadGists(0) }
+            presenter.loadGists(0)
+        }
     }
 
     override fun onResume() {
@@ -105,8 +108,8 @@ class HomeFragment : Fragment(), HomeContract.View {
     private fun setupRecycler(gists: List<Gist>) {
         val linearLayoutManager = LinearLayoutManager(context)
         gistsRecycler.layoutManager = linearLayoutManager
-        gistsRecycler.adapter = GistAdapter(gists.toMutableList()) {
-            context?.let { context -> GistDetailActivity.createIntent(context, it.id) }
+        gistsRecycler.adapter = GistAdapter(gists.toMutableList()) { gist, view ->
+            context?.let { context -> GistDetailActivity.createIntent(context, gist.id, view) }
         }
         gistsRecycler.setHasFixedSize(true)
         gistsRecycler.addOnScrolledToEnd {
