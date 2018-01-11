@@ -3,6 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+dependencies {
+    kapt "android.arch.persistence.room:compiler:1.0.0"
+}
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -76,6 +80,13 @@ dependencies {
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.4.0'
     kapt 'com.github.bumptech.glide:compiler:4.4.0'
+
+    //Room
+    implementation "android.arch.persistence.room:runtime:$rootProject.ext.roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.ext.roomVersion"
+
+    //GSON
+    implementation 'com.google.code.gson:gson:2.8.1'
 
     // Dependencies for local unit tests
     testImplementation "junit:junit:$rootProject.ext.junitVersion"

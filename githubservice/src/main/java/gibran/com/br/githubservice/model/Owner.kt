@@ -1,5 +1,6 @@
 package gibran.com.br.githubservice.model
 
+
 data class Owner(var gistsUrl: String? = null,
                  var reposUrl: String? = null,
                  var followingUrl: String? = null,

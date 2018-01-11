@@ -1,24 +1,38 @@
 package gibran.com.br.githubservice.model
 
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Embedded
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+
 /**
  * Created by gibranlyra on 09/01/18 for gist_consumer.
  */
-data class Gist(var url:String? = null,
-                var forksUrl:String? = null,
-                var commitsUrl:String? = null,
-                val id:String,
-                var gitPullUrl:String? = null,
-                var gitPushUrl:String? = null,
-                var htmUrl:String? = null,
-                var files: Files? = null,
-                var isPublic: Boolean = false,
-                var createdAt :String? = null,
-                var updatedAt :String? = null,
-                var description :String? = null,
-                var comments :String? = null,
-                var user :Any? = null,
-                var commentsUrl :String? = null,
-                var owner: Owner? = null,
-                var forks :List<Fork?>? = null,
-                var history :List<History?>? = null,
-                var truncated :Boolean = false)
+@Entity
+data class Gist(
+        @PrimaryKey(autoGenerate = true)
+        var uId: Int,
+        var url: String? = null,
+        var forksUrl: String? = null,
+        var commitsUrl: String? = null,
+        @ColumnInfo(name = "id", index = true)
+        val id: String,
+        var gitPullUrl: String? = null,
+        var gitPushUrl: String? = null,
+        var htmUrl: String? = null,
+        @Embedded(prefix = "gist_files_")
+        var files: Files? = null,
+        var isPublic: Boolean = false,
+        var createdAt: String? = null,
+        var updatedAt: String? = null,
+        var description: String? = null,
+        var comments: String? = null,
+        var user: Any? = null,
+        var commentsUrl: String? = null,
+        @Embedded(prefix = "gist_owner_")
+        var owner: Owner? = null,
+        @Embedded(prefix = "gist_forks_")
+        var forks: List<Fork?>? = null,
+        @Embedded(prefix = "gist_history_")
+        var history: List<History?>? = null,
+        var truncated: Boolean = false)

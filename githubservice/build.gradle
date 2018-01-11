@@ -45,21 +45,32 @@ ext {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
+
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+
     //Ok Http
     implementation "com.squareup.okhttp3:logging-interceptor:3.8.1"
+
     //RX
     implementation "io.reactivex.rxjava2:rxjava:2.1.7"
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
     //Timber
     implementation "com.jakewharton.timber:timber:$rootProject.ext.timberVersion"
+
     // JodaTime
     implementation 'net.danlew:android.joda:2.9.5'
+
     //Timezone
     implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+
+    //Room
+    implementation "android.arch.persistence.room:runtime:$rootProject.ext.roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.ext.roomVersion"
+
     //MultiDex
     implementation 'com.android.support:multidex:1.0.2'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"

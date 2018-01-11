@@ -15,6 +15,7 @@ buildscript {
         rulesVersion = '1.0.0'
         espressoVersion = '3.0.1'
         timberVersion = '4.5.1'
+        roomVersion = '1.0.0'
     }
 
     dependencies {
