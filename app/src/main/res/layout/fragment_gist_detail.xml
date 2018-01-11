@@ -24,6 +24,12 @@
         android:orientation="vertical"
         android:padding="@dimen/spacing_medium">
 
+        <include
+            android:id="@+id/errorView"
+            layout="@layout/error_view"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
         <ImageView
             android:id="@+id/authorImage"
             android:layout_width="match_parent"

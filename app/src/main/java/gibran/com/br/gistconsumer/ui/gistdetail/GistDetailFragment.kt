@@ -72,8 +72,12 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
 
     override fun showError(show: Boolean) {
         when (show) {
-            true -> view?.showSnackBar(getString(R.string.generic_error), Snackbar.LENGTH_LONG,
-                    getString(R.string.try_again), { gistId?.let { presenter.loadGist(it) } })
+            true -> {
+                view?.showSnackBar(getString(R.string.generic_error), Snackbar.LENGTH_INDEFINITE,
+                        getString(R.string.try_again), { gistId?.let { presenter.loadGist(it) } })
+                errorView.visibility = View.VISIBLE
+            }
+            else -> errorView.visibility = View.GONE
         }
     }
 
