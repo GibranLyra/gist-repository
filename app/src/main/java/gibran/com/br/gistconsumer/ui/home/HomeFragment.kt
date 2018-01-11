@@ -40,7 +40,7 @@ class HomeFragment : Fragment(), HomeContract.View {
             presenter.loadGists(page)
         }
         swipeRefreshLayout.setOnRefreshListener {
-            gistsRecycler.adapter?.let {
+            favoritesRecycler.adapter?.let {
                 (it as GistAdapter).clear()
             }
             presenter.loadGists(0)
@@ -97,7 +97,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun showGists(gists: List<Gist>) {
-        gistsRecycler.adapter?.let {
+        favoritesRecycler.adapter?.let {
             (it as GistAdapter).add(gists.toMutableList())
         } ?: run {
             hasLoaded = true
@@ -107,12 +107,12 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     private fun setupRecycler(gists: List<Gist>) {
         val linearLayoutManager = LinearLayoutManager(context)
-        gistsRecycler.layoutManager = linearLayoutManager
-        gistsRecycler.adapter = GistAdapter(gists.toMutableList()) { gist, view ->
+        favoritesRecycler.layoutManager = linearLayoutManager
+        favoritesRecycler.adapter = GistAdapter(gists.toMutableList()) { gist, view ->
             context?.let { context -> GistDetailActivity.createIntent(context, gist.id, view) }
         }
-        gistsRecycler.setHasFixedSize(true)
-        gistsRecycler.addOnScrolledToEnd {
+        favoritesRecycler.setHasFixedSize(true)
+        favoritesRecycler.addOnScrolledToEnd {
             page = it
             presenter.loadGists(page)
         }

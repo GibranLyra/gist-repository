@@ -47,7 +47,7 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
             //TODO get list from bundle
             gistId?.let { presenter.loadGist(it) }
         }
-        favoriteButton.setOnClickListener({ favoriteSaved() })
+        favoriteButton.setOnClickListener({ gist?.let { gist -> presenter.saveFavorite(gist) } })
     }
 
     override fun onResume() {
@@ -96,7 +96,7 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
     }
 
     override fun favoriteSaved() {
-        gist?.let { presenter.saveFavorite(it) }
+//        gist?.let { presenter.saveFavorite(it) }
     }
 
     override fun saveFavoriteError() {

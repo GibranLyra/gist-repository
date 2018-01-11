@@ -5,6 +5,7 @@ import gibran.com.br.gistconsumer.util.ObserverHelper
 import gibran.com.br.githubservice.room.MyDatabase
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import timber.log.Timber
 
 /**
  * Created by gibranlyra on 10/01/18 for gist_consumer.
@@ -31,15 +32,17 @@ class FavoritePresenter(private val database: MyDatabase,
     override fun loadFavorites() {
         view.showLoading(true)
         view.showError(false)
-        gistsQuery =Observable.just(0)
-                .subscribeOn(schedulerProvider.io())
+        gistsQuery = Observable.just(0)
                 .map { database.gistDao().getAll() }
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .doOnTerminate({
                     view.showLoading(false)
                 })
-                .observeOn(schedulerProvider.ui())
-                .subscribe({
-                    view.showFavorites(it)
-                }, { view.showError(true) })
+
+                .subscribe({ view.showFavorites(it) }, {
+                    Timber.e(it, "loadFavorites: %s", it.message)
+                    view.showError(true)
+                })
     }
 }

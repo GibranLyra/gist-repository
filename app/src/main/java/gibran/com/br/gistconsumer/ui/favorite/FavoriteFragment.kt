@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +37,7 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
             presenter.loadFavorites()
         }
         swipeRefreshLayout.setOnRefreshListener {
-            gistsRecycler.adapter?.let {
+            favoritesRecycler.adapter?.let {
                 (it as GistAdapter).clear()
             }
             presenter.loadFavorites()
@@ -79,11 +78,13 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
                 view?.showSnackBar(getString(R.string.generic_error), Snackbar.LENGTH_LONG,
                         getString(R.string.try_again), { presenter.loadFavorites() })
                 errorView.visibility = View.VISIBLE
-            } else -> errorView.visibility = View.GONE
+            }
+            else -> errorView.visibility = View.GONE
         }
     }
+
     override fun showFavorites(gists: List<Gist>) {
-        gistsRecycler.adapter?.let {
+        favoritesRecycler.adapter?.let {
             (it as GistAdapter).add(gists.toMutableList())
         } ?: run {
             hasLoaded = true
@@ -92,42 +93,10 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
     }
 
     private fun setupRecycler(gists: List<Gist>) {
-        val linearLayoutManager = LinearLayoutManager(context)
-        gistsRecycler.layoutManager = linearLayoutManager
-        gistsRecycler.adapter = GistAdapter(gists.toMutableList()) { gist, view ->
+        favoritesRecycler.layoutManager = LinearLayoutManager(context)
+        favoritesRecycler.adapter = GistAdapter(gists.toMutableList()) { gist, view ->
             context?.let { context -> GistDetailActivity.createIntent(context, gist.id, view) }
         }
-        gistsRecycler.setHasFixedSize(true)
-        gistsRecycler.addOnScrolledToEnd {
-            presenter.loadFavorites()
-        }
+        favoritesRecycler.setHasFixedSize(true)
     }
 }
-
-fun RecyclerView.addOnScrolledToEnd(onScrolledToEnd: (Int) -> Unit) {
-    this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        private val VISIBLE_THRESHOLD = 5
-
-        private var loading = true
-        private var previousTotal = 0
-        private var page = 0
-
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            with(layoutManager as LinearLayoutManager) {
-                val visibleItemCount = childCount
-                val totalItemCount = itemCount
-                val firstVisibleItem = findFirstVisibleItemPosition()
-                if (loading && totalItemCount > previousTotal) {
-                    loading = false
-                    previousTotal = totalItemCount
-                }
-                if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_THRESHOLD)) {
-                    page++
-                    onScrolledToEnd(page)
-                    loading = true
-                }
-            }
-        }
-    })
-}
-
