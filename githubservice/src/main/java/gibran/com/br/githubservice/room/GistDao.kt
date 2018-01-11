@@ -22,4 +22,7 @@ interface GistDao {
 
     @Query("SELECT * FROM gist")
     fun getAll(): List<Gist>
+
+    @Query("SELECT * FROM gist WHERE id LIKE :id")
+    fun findById(id: String): Gist
 }

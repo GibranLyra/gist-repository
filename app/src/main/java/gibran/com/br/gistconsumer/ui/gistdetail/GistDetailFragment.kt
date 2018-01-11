@@ -20,6 +20,7 @@ internal const val EXTRA_GIST_ID = "EXTRA_GIST_ID"
 
 class GistDetailFragment : Fragment(), GistDetailContract.View {
     private lateinit var presenter: GistDetailContract.Presenter
+
     private var gist: Gist? = null
     private var gistId: String? = null
     private var hasLoaded = false
@@ -54,6 +55,7 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
         super.onResume()
         if (!hasLoaded) {
             gistId?.let { presenter.loadGist(it) }
+            gistId?.let { presenter.checkFavorite(it) }
         }
     }
 
@@ -84,6 +86,7 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
     }
 
     override fun showGist(gist: Gist) {
+        hasLoaded = true
         this.gist = gist
         gistDescription.text = gist.description
         gistAuthor.text = gist.owner?.login
@@ -95,12 +98,17 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
                 .into(authorImage)
     }
 
-    override fun favoriteSaved() {
-//        gist?.let { presenter.saveFavorite(it) }
-    }
+    override fun favoriteSaved() = isFavorite(true)
 
     override fun saveFavoriteError() {
         view?.showSnackBar(getString(R.string.save_favorite_error), Snackbar.LENGTH_LONG,
                 getString(R.string.try_again), { favoriteSaved() })
+    }
+
+    override fun isFavorite(isFavorite: Boolean) {
+        when (isFavorite) {
+            true -> favoriteButton.setImageResource(R.drawable.ic_favorite_filled)
+            else -> favoriteButton.setImageResource(R.drawable.ic_favorite)
+        }
     }
 }

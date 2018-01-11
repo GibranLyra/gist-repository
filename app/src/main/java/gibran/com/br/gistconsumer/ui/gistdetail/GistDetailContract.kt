@@ -14,11 +14,13 @@ public interface GistDetailContract {
         fun showGist(gist: Gist)
         fun favoriteSaved()
         fun saveFavoriteError()
+        fun isFavorite(isFavorite: Boolean)
     }
 
     interface Presenter : BaseContractPresenter {
         fun loadGist(gistId: String)
         fun saveFavorite(gist: Gist)
+        fun checkFavorite(gistId: String)
     }
 }
 

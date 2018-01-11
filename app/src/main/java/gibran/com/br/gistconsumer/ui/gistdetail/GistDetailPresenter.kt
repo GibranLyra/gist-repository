@@ -53,4 +53,15 @@ class GistDetailPresenter(private val gistsApi: GistsApi,
                     view.saveFavoriteError()
                 })
     }
+
+    override fun checkFavorite(gistId: String) {
+        Observable.just(0)
+                .map { database.gistDao().findById(gistId) != null }
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe({ view.isFavorite(it) }, {
+                    Timber.e(it, "checkFavorite: %s", it.message)
+                    view.showError(true)
+                })
+    }
 }
