@@ -24,13 +24,13 @@ class HomeFragment : Fragment(), HomeContract.View {
     private var hasLoaded = false
 
     private var page = 0
+
     companion object {
         fun newInstance(): HomeFragment = HomeFragment()
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
@@ -86,6 +86,13 @@ class HomeFragment : Fragment(), HomeContract.View {
         }
     }
 
+    override fun showErrorNoData(show: Boolean) {
+        when (show) {
+            true -> errorView.visibility = View.VISIBLE
+            else -> errorView.visibility = View.GONE
+        }
+    }
+
     override fun showGists(gists: List<Gist>) {
         gistsRecycler.adapter?.let {
             (it as GistAdapter).add(gists.toMutableList())
@@ -110,7 +117,6 @@ class HomeFragment : Fragment(), HomeContract.View {
 }
 
 fun RecyclerView.addOnScrolledToEnd(onScrolledToEnd: (Int) -> Unit) {
-
     this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
         private val VISIBLE_THRESHOLD = 5
 

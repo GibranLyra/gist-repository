@@ -12,6 +12,7 @@ public interface HomeContract {
         fun showLoading(show: Boolean)
         fun showBottomLoading(show: Boolean)
         fun showError(show: Boolean)
+        fun showErrorNoData(show: Boolean)
         fun showGists(gists: List<Gist>)
     }
 

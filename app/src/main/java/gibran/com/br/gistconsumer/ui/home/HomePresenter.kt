@@ -35,6 +35,7 @@ class HomePresenter(private val gistsApi: GistsApi,
             else -> view.showBottomLoading(true)
         }
         view.showError(false)
+        view.showErrorNoData(false)
         gistsRequest = gistsApi.publicGists(page, PAGE_SIZE)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
@@ -45,6 +46,11 @@ class HomePresenter(private val gistsApi: GistsApi,
                     }
                 })
                 .subscribe({ view.showGists(it) },
-                        { view.showError(true) })
+                        {
+                            view.showError(true)
+                            when(page) {
+                                0 -> view.showErrorNoData(true)
+                            }
+                        })
     }
 }
