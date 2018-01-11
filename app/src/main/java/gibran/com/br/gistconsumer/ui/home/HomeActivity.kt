@@ -34,9 +34,11 @@ class HomeActivity : AppCompatActivity() {
 
     private fun openHomeFragment() {
         val homeId = "home"
-        val fragment = supportFragmentManager.findFragmentByTag(homeId)
-                as HomeFragment? ?: HomeFragment.newInstance().also {
-            replaceFragmentInActivity(it, R.id.contentFrame, homeId)
+        var fragment: HomeFragment? = supportFragmentManager.findFragmentByTag(homeId) as HomeFragment?
+        if (fragment == null) {
+            // Create the fragment
+            fragment = HomeFragment.newInstance()
+            replaceFragmentInActivity(fragment, R.id.contentFrame, homeId)
         }
         HomePresenter(GistsApi, fragment, SchedulerProvider)
     }
@@ -47,9 +49,11 @@ class HomeActivity : AppCompatActivity() {
 
     private fun openFavoriteFragment() {
         val favoriteId = "favoriteId"
-        val fragment = supportFragmentManager.findFragmentByTag(favoriteId)
-                as FavoriteFragment? ?: FavoriteFragment.newInstance().also {
-            replaceFragmentInActivity(it, R.id.contentFrame, favoriteId)
+        var fragment: FavoriteFragment? = supportFragmentManager.findFragmentByTag(favoriteId) as FavoriteFragment?
+        if (fragment == null) {
+            // Create the fragment
+            fragment = FavoriteFragment.newInstance()
+            replaceFragmentInActivity(fragment, R.id.contentFrame, favoriteId)
         }
         FavoritePresenter(AppContext.instance.database, fragment, SchedulerProvider)
     }

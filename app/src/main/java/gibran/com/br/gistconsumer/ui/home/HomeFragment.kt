@@ -65,11 +65,11 @@ class HomeFragment : Fragment(), HomeContract.View {
     override fun showLoading(show: Boolean) {
         when (show) {
             true -> {
-                loadingProgressBar.show()
+                loadingProgressBar?.show()
                 swipeRefreshLayout.isRefreshing = true
             }
             else -> {
-                loadingProgressBar.hide()
+                loadingProgressBar?.hide()
                 swipeRefreshLayout.isRefreshing = false
             }
         }
