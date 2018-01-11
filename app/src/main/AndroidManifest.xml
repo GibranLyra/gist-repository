@@ -23,8 +23,7 @@
         <activity android:name=".ui.gistdetail.GistDetailActivity"
                   android:parentActivityName=".ui.home.HomeActivity"/>
 
-        <activity android:name=".ui.raw.RawActivity"
-                  android:parentActivityName=".ui.gistdetail.GistDetailActivity"/>
+        <activity android:name=".ui.raw.RawActivity"/>
     </application>
 
 </manifest>
