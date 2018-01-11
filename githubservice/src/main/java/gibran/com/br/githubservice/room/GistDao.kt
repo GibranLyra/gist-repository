@@ -25,4 +25,7 @@ interface GistDao {
 
     @Query("SELECT * FROM gist WHERE id LIKE :id")
     fun findById(id: String): Gist
+
+    @Query("DELETE FROM gist WHERE id LIKE :id")
+    fun deleteById(id: String)
 }

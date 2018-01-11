@@ -22,6 +22,7 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
     private lateinit var presenter: GistDetailContract.Presenter
 
     private var gist: Gist? = null
+
     private var gistId: String? = null
     private var hasLoaded = false
 
@@ -48,7 +49,6 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
             //TODO get list from bundle
             gistId?.let { presenter.loadGist(it) }
         }
-        favoriteButton.setOnClickListener({ gist?.let { gist -> presenter.saveFavorite(gist) } })
     }
 
     override fun onResume() {
@@ -102,13 +102,34 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
 
     override fun saveFavoriteError() {
         view?.showSnackBar(getString(R.string.save_favorite_error), Snackbar.LENGTH_LONG,
-                getString(R.string.try_again), { favoriteSaved() })
+                getString(R.string.try_again), { gist?.let { presenter.saveFavorite(it) } })
+    }
+
+    override fun favoriteRemoved() = isFavorite(false)
+
+    override fun removedFavoriteError() {
+        view?.showSnackBar(getString(R.string.remove_favorite_message), Snackbar.LENGTH_LONG,
+                getString(R.string.try_again), { gist?.let { presenter.removeFavorite(it) } })
     }
 
     override fun isFavorite(isFavorite: Boolean) {
         when (isFavorite) {
-            true -> favoriteButton.setImageResource(R.drawable.ic_favorite_filled)
-            else -> favoriteButton.setImageResource(R.drawable.ic_favorite)
+            true -> {
+                favoriteButton.setImageResource(R.drawable.ic_favorite_filled)
+                favoriteButton.setOnClickListener({
+                    gist?.let { gist ->
+                        presenter.removeFavorite(gist)
+                    }
+                })
+            }
+            else -> {
+                favoriteButton.setImageResource(R.drawable.ic_favorite)
+                favoriteButton.setOnClickListener({
+                    gist?.let { gist ->
+                        presenter.saveFavorite(gist)
+                    }
+                })
+            }
         }
     }
 }

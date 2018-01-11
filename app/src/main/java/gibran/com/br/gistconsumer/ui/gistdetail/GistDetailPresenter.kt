@@ -54,6 +54,17 @@ class GistDetailPresenter(private val gistsApi: GistsApi,
                 })
     }
 
+    override fun removeFavorite(gist: Gist) {
+        Observable.just(0)
+                .map { database.gistDao().deleteById(gist.id) }
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe({ view.favoriteRemoved() }, {
+                    Timber.e(it, "removeFavorite: %s", it.message)
+                    view.removedFavoriteError()
+                })
+    }
+
     override fun checkFavorite(gistId: String) {
         Observable.just(0)
                 .map { database.gistDao().findById(gistId) != null }
