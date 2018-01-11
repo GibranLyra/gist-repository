@@ -81,7 +81,8 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
 
     override fun showFavorites(gists: List<Gist>) {
         favoritesRecycler.adapter?.let {
-            (it as GistAdapter).add(gists.toMutableList())
+            (it as GistAdapter).clear()
+            it.add(gists.toMutableList())
         } ?: run {
             setupRecycler(gists)
         }
