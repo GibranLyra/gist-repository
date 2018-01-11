@@ -3,7 +3,6 @@ package gibran.com.br.gistconsumer.ui.recycler.gist
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import gibran.com.br.gistconsumer.R
 import gibran.com.br.gistconsumer.ui.GlideApp
 import gibran.com.br.gistconsumer.ui.inflate
@@ -27,6 +26,11 @@ class GistAdapter(private val items: MutableList<Gist>,
         val adapterSize = items.size
         items.addAll(gists)
         notifyItemRangeInserted(adapterSize, gists.size)
+    }
+
+    internal fun clear() {
+        items.clear()
+        notifyDataSetChanged()
     }
 }
 

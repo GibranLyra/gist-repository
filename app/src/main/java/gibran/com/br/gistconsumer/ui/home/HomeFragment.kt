@@ -25,9 +25,7 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     private var page = 0
     companion object {
-
         fun newInstance(): HomeFragment = HomeFragment()
-
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -39,6 +37,11 @@ class HomeFragment : Fragment(), HomeContract.View {
             //TODO get list from bundle
             presenter.loadGists(page)
         }
+        swipeRefreshLayout.setOnRefreshListener {
+            gistsRecycler.adapter?.let {
+                (it as GistAdapter).clear()
+            }
+            presenter.loadGists(0) }
     }
 
     override fun onResume() {
@@ -58,8 +61,14 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun showLoading(show: Boolean) {
         when (show) {
-            true -> loadingProgressBar.show()
-            else -> loadingProgressBar.hide()
+            true -> {
+                loadingProgressBar.show()
+                swipeRefreshLayout.isRefreshing = true
+            }
+            else -> {
+                loadingProgressBar.hide()
+                swipeRefreshLayout.isRefreshing = false
+            }
         }
     }
 
@@ -79,7 +88,7 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun showGists(gists: List<Gist>) {
         gistsRecycler.adapter?.let {
-            (gistsRecycler.adapter as GistAdapter).add(gists.toMutableList())
+            (it as GistAdapter).add(gists.toMutableList())
         } ?: run {
             hasLoaded = true
             setupRecycler(gists)
