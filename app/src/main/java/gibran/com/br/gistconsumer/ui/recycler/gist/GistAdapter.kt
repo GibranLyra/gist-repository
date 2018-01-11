@@ -42,7 +42,7 @@ class GistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         GlideApp.with(this)
                 .load(item.owner?.avatarUrl)
                 .centerCrop()
-                .placeholder(R.drawable.notification_template_icon_bg)
+                .placeholder(R.drawable.github_placeholder)
                 .into(authorImage)
         setOnClickListener { listener(item, authorImage) }
     }
