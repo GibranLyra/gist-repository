@@ -10,4 +10,6 @@
     <string name="error_image_content_description">Error Image</string>
     <string name="save_favorite_error">Não foi possível salvar o favorito.</string>
     <string name="remove_favorite_message">Não foi possível remover ‘o favorito.</string>
+    <string name="open_raw">Abrir Raw</string>
+    <string name="no_raw_to_display">No Raw to display.</string>
 </resources>

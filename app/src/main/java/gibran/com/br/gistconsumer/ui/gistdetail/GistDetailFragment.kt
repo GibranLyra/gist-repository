@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import gibran.com.br.gistconsumer.R
 import gibran.com.br.gistconsumer.ui.GlideApp
+import gibran.com.br.gistconsumer.ui.raw.RawActivity
 import gibran.com.br.gistconsumer.ui.showSnackBar
 import gibran.com.br.githubservice.model.Gist
 import kotlinx.android.synthetic.main.fragment_gist_detail.*
@@ -36,7 +37,6 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
             fragment.arguments = bundle
             return fragment
         }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -55,6 +55,14 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
                 }
             }
         }
+        openRawButton.setOnClickListener({
+            gist.files?.file?.content?.let {
+                context?.let { context -> RawActivity.createIntent(context, it) }
+            } ?: run {
+                view.showSnackBar(getString(R.string.no_raw_to_display), Snackbar.LENGTH_SHORT)
+            }
+
+        })
     }
 
     override fun onResume() {

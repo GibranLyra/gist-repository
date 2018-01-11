@@ -27,8 +27,13 @@
         <include
             android:id="@+id/errorView"
             layout="@layout/error_view"
-            android:visibility="gone"
-            tools:visibility="visible"/>
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/openRawButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/open_raw"/>
 
         <ImageView
             android:id="@+id/authorImage"
