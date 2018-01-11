@@ -27,12 +27,8 @@ data class Gist(
         var updatedAt: String? = null,
         var description: String? = null,
         var comments: String? = null,
-        var user: Any? = null,
+        var user: String? = null,
         var commentsUrl: String? = null,
         @Embedded(prefix = "gist_owner_")
         var owner: Owner? = null,
-        @Embedded(prefix = "gist_forks_")
-        var forks: List<Fork?>? = null,
-        @Embedded(prefix = "gist_history_")
-        var history: List<History?>? = null,
         var truncated: Boolean = false)

@@ -8,7 +8,7 @@ import gibran.com.br.githubservice.model.Gist
 /**
  * Created by gibranlyra on 11/01/18 for gist_consumer.
  */
-@Database(entities = [(Gist::class)], version = 1)
+@Database(entities = arrayOf(Gist::class), version = 1)
 abstract class MyDatabase : RoomDatabase() {
     abstract fun gistDao(): GistDao
 }

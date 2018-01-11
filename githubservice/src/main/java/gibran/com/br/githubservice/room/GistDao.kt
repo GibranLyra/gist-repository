@@ -22,7 +22,4 @@ interface GistDao {
 
     @Query("SELECT * FROM gist")
     fun getAll(): List<Gist>
-
-    @Query("SELECT * FROM gist WHERE id LIKE :id LIMIT 1")
-    fun findByName(name: String): Gist
 }

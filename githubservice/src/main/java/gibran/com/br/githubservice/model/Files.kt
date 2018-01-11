@@ -1,3 +1,10 @@
 package gibran.com.br.githubservice.model
 
-data class Files(var file: Map<String, String>? = null)
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+
+@Entity
+data class Files(
+        @PrimaryKey(autoGenerate = true)
+       val id: String,
+        var file: String? = null)

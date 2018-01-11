@@ -1,20 +1,23 @@
 package gibran.com.br.gistconsumer
 
 import android.app.Application
+
+
+
 import android.arch.persistence.room.Room
 import com.jakewharton.threetenabp.AndroidThreeTen
 import gibran.com.br.githubservice.GitHubApiModule
 import gibran.com.br.githubservice.room.MyDatabase
 import timber.log.Timber
-
-
-
 /**
  * Created by gibranlyra on 09/01/18 for gist_consumer.
  */
 class AppContext : Application() {
+    internal lateinit var database: MyDatabase
+
     companion object {
         lateinit var instance: AppContext private set
+
     }
 
     override fun onCreate() {
@@ -42,6 +45,6 @@ class AppContext : Application() {
     }
 
     private fun initializeRoom() {
-        val database = Room.databaseBuilder(applicationContext, MyDatabase::class.java, "MyDatabase.db").build()
+        database = Room.databaseBuilder(applicationContext, MyDatabase::class.java, "MyDataBase").build()
     }
 }

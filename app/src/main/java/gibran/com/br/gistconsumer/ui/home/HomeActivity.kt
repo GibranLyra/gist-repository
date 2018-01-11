@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import br.com.net.nowonline.presentation.util.schedulers.SchedulerProvider
 import gibran.com.br.gistconsumer.R
 import gibran.com.br.gistconsumer.ui.about.AboutFragment
+import gibran.com.br.gistconsumer.ui.favorite.FavoriteFragment
 import gibran.com.br.gistconsumer.ui.replaceFragmentInActivity
 import gibran.com.br.gistconsumer.ui.setupActionBar
 import gibran.com.br.githubservice.gists.GistsApi
@@ -39,9 +40,14 @@ class HomeActivity : AppCompatActivity() {
         replaceFragmentInActivity(AboutFragment.newInstance(), R.id.contentFrame)
     }
 
+    private fun openFavoriteFragment() {
+        replaceFragmentInActivity(FavoriteFragment.newInstance(), R.id.contentFrame)
+    }
+
     private fun changeFragment(@IdRes itemId: Int) {
         when (itemId) {
             R.id.action_home -> openHomeFragment()
+            R.id.action_favorites -> openFavoriteFragment()
             R.id.action_about -> openAboutFragment()
         }
     }
