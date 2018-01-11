@@ -13,15 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name="gibran.com.br.gistconsumer.ui.home.HomeActivity">
+        <activity android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="gibran.com.br.gistconsumer.ui.gistdetail.GistDetailActivity"
+        <activity android:name=".ui.gistdetail.GistDetailActivity"
                   android:parentActivityName=".ui.home.HomeActivity"/>
+        <activity android:name=".ui.raw.RawActivity"/>
     </application>
 
 </manifest>
