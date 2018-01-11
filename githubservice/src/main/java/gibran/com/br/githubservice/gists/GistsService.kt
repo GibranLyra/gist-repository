@@ -1,5 +1,6 @@
 package gibran.com.br.githubservice.gists
 
+import com.google.gson.JsonArray
 import gibran.com.br.githubservice.model.Gist
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -14,7 +15,7 @@ internal const val GISTS = "gists/"
 internal interface GistsService {
     @GET(GISTS.plus("public"))
     fun publicGists(@Query("page") page: Int,
-                    @Query("perPage") perPage: Int): Observable<List<Gist>>
+                    @Query("perPage") perPage: Int): Observable<JsonArray>
 
     @GET(GISTS.plus("{id}"))
     fun gist(@Path("id") id: String): Observable<Gist>

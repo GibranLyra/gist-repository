@@ -90,7 +90,7 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
         this.gist = gist
         gistDescription.text = gist.description
         gistAuthor.text = gist.owner?.login
-        gistLanguage.text = gist.files?.file
+        gistLanguage.text = gist.files?.file?.language
         GlideApp.with(this)
                 .load(gist.owner?.avatarUrl)
                 .centerCrop()

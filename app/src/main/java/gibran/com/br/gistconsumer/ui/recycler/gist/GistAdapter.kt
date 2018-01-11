@@ -38,7 +38,7 @@ class GistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(item: Gist, listener: (Gist, View) -> Unit) = with(itemView) {
         gistDescription.text = item.description
         gistAuthor.text = item.owner?.login
-        gistLanguage.text = item.files?.file?.toString()
+        gistLanguage.text = item.files?.file?.language
         GlideApp.with(this)
                 .load(item.owner?.avatarUrl)
                 .centerCrop()

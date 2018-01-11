@@ -45,6 +45,9 @@ class AppContext : Application() {
     }
 
     private fun initializeRoom() {
-        database = Room.databaseBuilder(applicationContext, MyDatabase::class.java, "MyDataBase").build()
+        database = Room
+                .databaseBuilder(applicationContext, MyDatabase::class.java, "MyDataBase")
+                .fallbackToDestructiveMigration()
+                .build()
     }
 }
