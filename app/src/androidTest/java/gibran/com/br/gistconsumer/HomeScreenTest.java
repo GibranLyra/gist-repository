@@ -1,7 +1,7 @@
 package gibran.com.br.gistconsumer;
 
 import android.support.test.espresso.Espresso;
-import android.support.test.espresso.ViewInteraction;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 
 import org.junit.After;
@@ -9,16 +9,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import br.com.net.nowkids.ui.screen.home.HomeActivity;
 import gibran.com.br.gistconsumer.ui.home.HomeActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static org.hamcrest.Matchers.allOf;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Created by gibranlyra on 14/09/17.
@@ -48,56 +45,18 @@ public class HomeScreenTest {
     }
 
     @Test
-    public void showSettingsScreen() {
-//        onView(withId(R.id.fragment_screen_settings_view))
-//                .perform(scrollTo(), click());
-//        onView(withId(R.id.password_field)).check(matches(isDisplayed()));
+    public void showFavoriteTab() {
+        onView(withId(R.id.action_favorites)).perform(click());
+        onView(withId(R.id.favoritesRecycler)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void showSearchScreen() {
-        onView(withId(R.id.action_search)).perform(click());
-        onView(withId(R.id.fragment_search_container)).check(matches(isDisplayed()));
+    public void showGistDetails() {
+        onView(withId(R.id.favoritesRecycler))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.favoriteButton)).check(matches(isDisplayed()));
     }
 
-    @Test
-    public void showRentedScreenLogged() {
-        onView(withId(R.id.action_rented)).perform(click());
-        onView(withId(R.id.fragment_video_progress_bar)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void showRentedScreenNotLogged() {
-        AuthorizationManager.getInstance().logout();
-        onView(withId(R.id.action_rented)).perform(click());
-        onView(withText(AppContext.getInstance().getResources()
-                .getString(R.string.login_message_dialog_login_is_needed)))
-                .check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void showCharacter() {
-        ViewInteraction cardView = onView(
-                allOf(withId(R.id.character_recycler_character_card),
-                        withContentDescription("character_Ladybug")));
-        cardView.perform(click());
-        onView(withId(R.id.actionbar_character_character_name))
-                .check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void showChannel() {
-        ViewInteraction itemView = onView(
-                allOf(withId(R.id.channel_recycler_item_channel_image),
-                        withContentDescription("Gloob")));
-        itemView.perform(scrollTo(), click());
-        onView(withId(R.id.action_bar_home_image))
-                .check(matches(isDisplayed()));
-    }
-
-    /**
-     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.
-     */
     @After
     public void unregisterIdlingResource() {
         Espresso.unregisterIdlingResources(
