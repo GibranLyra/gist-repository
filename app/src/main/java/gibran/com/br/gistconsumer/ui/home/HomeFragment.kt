@@ -85,7 +85,7 @@ class HomeFragment : Fragment(), HomeContract.View {
             }
             else -> {
                 loadingProgressBar?.hide()
-                swipeRefreshLayout.isRefreshing = false
+                swipeRefreshLayout?.isRefreshing = false
             }
         }
     }
@@ -106,8 +106,8 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun showErrorNoData(show: Boolean) {
         when (show) {
-            true -> errorView.visibility = View.VISIBLE
-            else -> errorView.visibility = View.GONE
+            true -> errorView?.visibility = View.VISIBLE
+            else -> errorView?.visibility = View.GONE
         }
     }
 

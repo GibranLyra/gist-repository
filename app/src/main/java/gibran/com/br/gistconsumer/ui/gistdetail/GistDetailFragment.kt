@@ -89,8 +89,14 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
 
     override fun showLoading(show: Boolean) {
         when (show) {
-            true -> loadingProgressBar.show()
-            else -> loadingProgressBar.hide()
+            true -> {
+                openRawButton.visibility = View.GONE
+                loadingProgressBar.show()
+            }
+            else -> {
+                openRawButton.visibility = View.VISIBLE
+                loadingProgressBar.hide()
+            }
         }
     }
 
