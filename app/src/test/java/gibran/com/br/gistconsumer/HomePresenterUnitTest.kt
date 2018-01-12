@@ -6,7 +6,6 @@ import gibran.com.br.gistconsumer.ui.home.HomePresenter
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
@@ -47,7 +46,7 @@ class HomePresenterUnitTest {
         inOrder.verify(viewContract).showLoading(true)
         inOrder.verify(viewContract).showError(false)
         inOrder.verify(viewContract).showErrorNoData(false)
-        inOrder.verify(viewContract).showGists(ArgumentMatchers.anyList())
+        inOrder.verify(viewContract).showGists(GistMockedService.GISTS)
         inOrder.verify(viewContract).showLoading(false)
         inOrder.verify(viewContract, never()).showError(true)
         inOrder.verify(viewContract, never()).showErrorNoData(true)
@@ -68,7 +67,7 @@ class HomePresenterUnitTest {
         inOrder.verify(viewContract).showLoading(false)
         inOrder.verify(viewContract).showError(true)
         inOrder.verify(viewContract).showErrorNoData(true)
-        verify(viewContract, never()).showGists(ArgumentMatchers.anyList())
+        verify(viewContract, never()).showGists(GistMockedService.GISTS)
     }
 
 
