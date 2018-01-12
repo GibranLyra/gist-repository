@@ -8,15 +8,6 @@
     android:layout_height="match_parent"
     app:cardUseCompatPadding="true">
 
-    <android.support.v4.widget.ContentLoadingProgressBar
-        android:id="@+id/loadingProgressBar"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        tools:visibility="visible"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -61,6 +52,16 @@
             tools:text="Gist Author"/>
 
     </LinearLayout>
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/loadingProgressBar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        tools:visibility="visible"/>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/favoriteButton"

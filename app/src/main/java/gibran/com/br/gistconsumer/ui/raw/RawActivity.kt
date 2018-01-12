@@ -25,8 +25,8 @@ class RawActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_raw)
         setupActionBar(R.id.toolbar) {
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
+            setDisplayHomeAsUpEnabled(false)
+            setDisplayShowHomeEnabled(false)
         }
         intent.extras.getString(EXTRA_RAW).let {
             rawTextView.text = it

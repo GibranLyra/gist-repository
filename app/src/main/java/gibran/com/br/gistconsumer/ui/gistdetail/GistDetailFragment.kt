@@ -61,7 +61,6 @@ class GistDetailFragment : Fragment(), GistDetailContract.View {
             } ?: run {
                 view.showSnackBar(getString(R.string.no_raw_to_display), Snackbar.LENGTH_SHORT)
             }
-
         })
     }
 
